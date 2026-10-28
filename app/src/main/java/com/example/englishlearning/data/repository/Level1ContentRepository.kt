@@ -1,20 +1,25 @@
 package com.example.englishlearning.data.repository
 
-import com.example.englishlearning.data.model.*
+import com.example.englishlearning.data.model.Lesson
+import com.example.englishlearning.data.model.Level
+import com.example.englishlearning.data.model.QuizItem
+import com.example.englishlearning.data.model.QuizType
+import com.example.englishlearning.data.model.WordItem
 
 /**
- * লেভেল ১-এর জন্য প্রাথমিক সমৃদ্ধ কনটেন্ট সংগ্রহস্থল (Repository)।
- * এখানে বাচ্চা ও নতুনদের জন্য ৩টি মৌলিক সাব-স্টেপ তৈরি করা হয়েছে।
+ * লেভেল ১-এর জন্য সমৃদ্ধ শব্দ ও ফনিক্স সংগ্রহস্থল।
+ * এখানে প্রতিটি শব্দের সাথে আকর্ষণীয় ছবি/ইমোজি, বাংলা উচ্চারণ ও অর্থ রয়েছে।
+ * প্রতিটি স্টেপে ৫টি করে বহুনির্বাচনী কুইজ রয়েছে।
  */
 object Level1ContentRepository {
 
     fun getLevel1Data(): Level {
         return Level(
             id = 1,
-            titleBn = "লেভেল ১: ফাউন্ডেশন (বাচ্চা ও নতুনদের জন্য)",
-            titleEn = "Level 1: Beginner Foundation",
-            subtitleBn = "সহজ শব্দ, স্পষ্ট উচ্চারণ ও প্রাথমিক কথোপকথন",
-            isUnlocked = true, // প্রথম লেভেলটি সবসময় উন্মুক্ত থাকবে
+            titleBn = "লেভেল ১: শব্দ, ফনিক্স ও প্রাথমিক জ্ঞান",
+            titleEn = "Level 1: Phonics & Daily Vocabulary",
+            subtitleBn = "ছবি দেখে শব্দ শেখা ও কুইজ খেলে পরের ধাপ আনলক করা",
+            isUnlocked = true,
             lessons = listOf(
                 createStep1_1(),
                 createStep1_2(),
@@ -24,186 +29,136 @@ object Level1ContentRepository {
     }
 
     /**
-     * স্টেপ ১.১: প্রথম পরিচয় ও ফনিক্স শব্দ
+     * স্টেপ ১.১: ফনিক্স ও পরিচিত বস্তু (স্ক্রল করে অনেকগুলো শব্দ দেখার সুযোগ)
      */
     private fun createStep1_1(): Lesson {
         return Lesson(
             id = "step_1_1",
             levelId = 1,
-            titleBn = "স্টেপ ১.১: প্রথম শব্দ ও ফনিক্স",
-            titleEn = "Step 1.1: Phonics & Everyday Words",
-            descriptionBn = "ছবি ও অডিও শুনে ইংরেজি শব্দের সঠিক উচ্চারণ শেখা।",
-            isUnlocked = true, // প্রথম স্টেপ আনলক
+            titleBn = "স্টেপ ১.১: প্রথম পরিচয় ও ফনিক্স",
+            titleEn = "Step 1.1: Everyday Phonics",
+            descriptionBn = "ছবি ও অডিও শুনে ইংরেজি শব্দের সঠিক উচ্চারণ শেখো।",
+            isUnlocked = true,
             starsEarned = 0,
             words = listOf(
-                WordItem(
-                    id = "w_apple",
-                    englishWord = "Apple",
-                    bengaliMeaning = "আপেল",
-                    bengaliPronunciation = "অ্যাপল",
-                    exampleSentenceEn = "I eat an apple.",
-                    exampleSentenceBn = "আমি আপেল খাই।"
-                ),
-                WordItem(
-                    id = "w_ball",
-                    englishWord = "Ball",
-                    bengaliMeaning = "বল / খেলার বল",
-                    bengaliPronunciation = "বল্",
-                    exampleSentenceEn = "This is a red ball.",
-                    exampleSentenceBn = "এটি একটি লাল বল।"
-                ),
-                WordItem(
-                    id = "w_cat",
-                    englishWord = "Cat",
-                    bengaliMeaning = "বিড়াল",
-                    bengaliPronunciation = "ক্যাট",
-                    exampleSentenceEn = "The cat is cute.",
-                    exampleSentenceBn = "বিড়ালটি সুন্দর।"
-                ),
-                WordItem(
-                    id = "w_dog",
-                    englishWord = "Dog",
-                    bengaliMeaning = "কুকুর",
-                    bengaliPronunciation = "ডগ",
-                    exampleSentenceEn = "The dog runs fast.",
-                    exampleSentenceBn = "কুকুরটি দ্রুত দৌড়ায়।"
-                )
+                WordItem("w1", "Apple", "আপেল", "অ্যাপল", "🍎", "I love sweet apples.", "আমি মিষ্টি আপেল ভালোবাসি।"),
+                WordItem("w2", "Ball", "বল", "বল্", "⚽", "Throw the ball to me.", "আমার দিকে বলটি ছুড়ে দাও।"),
+                WordItem("w3", "Cat", "বিড়াল", "ক্যাট", "🐱", "The cat drinks milk.", "বিড়ালটি দুধ খায়।"),
+                WordItem("w4", "Dog", "কুকুর", "ডগ", "🐶", "The dog is loyal.", "কুকুর বিশ্বস্ত প্রাণী।"),
+                WordItem("w5", "Elephant", "হাতি", "এলিফ্যান্ট", "🐘", "The elephant is huge.", "হাতি অনেক বড়।"),
+                WordItem("w6", "Fish", "মাছ", "ফিশ", "🐟", "Fish swims in water.", "মাছ পানিতে সাঁতার কাটে।"),
+                WordItem("w7", "Grapes", "আঙ্গুর", "গ্রেপ্স", "🍇", "Grapes are juicy.", "আঙ্গুর রসালো ফল।"),
+                WordItem("w8", "Horse", "ঘোড়া", "হর্স", "🐴", "The horse runs fast.", "ঘোড়া দ্রুত দৌড়ায়।"),
+                WordItem("w9", "Ice Cream", "আইসক্রিম", "আইসক্রিম", "🍦", "Kids love ice cream.", "বাচ্চারা আইসক্রিম পছন্দ করে।"),
+                WordItem("w10", "Juice", "ফলের রস", "জুস", "🧃", "Orange juice is fresh.", "কমলার রস সতেজ।"),
+                WordItem("w11", "Kite", "ঘুড়ি", "কাইট", "🪁", "Fly a kite in the sky.", "আকাশে ঘুড়ি ওড়াও।"),
+                WordItem("w12", "Lion", "সিংহ", "লায়ন", "🦁", "The lion is the king.", "সিংহ বনের রাজা।")
             ),
+            // ৫টি কুইজ, প্রতিটিতে ৪টি করে অপশন
             quizzes = listOf(
                 QuizItem(
-                    id = "q_1",
-                    type = QuizType.LISTEN_AND_PICK,
-                    questionPromptEn = "Which one is 'Apple'?",
-                    questionPromptBn = "'আপেল' এর ইংরেজি কোনটি?",
-                    options = listOf("Apple", "Cat", "Ball"),
-                    correctAnswer = "Apple"
+                    id = "q1",
+                    type = QuizType.PICTURE_IDENTIFY,
+                    questionImageEmoji = "🍎",
+                    questionPromptBn = "এই ছবিটি কিসের? সঠিক ইংরেজি নির্বাচন করো:",
+                    options = listOf("Apple", "Ball", "Cat", "Dog"),
+                    correctAnswer = "Apple",
+                    explanationBn = "🍎 হলো Apple (আপেল)"
                 ),
                 QuizItem(
-                    id = "q_2",
-                    type = QuizType.SPEAK_PRACTICE,
-                    questionPromptEn = "Say: 'Cat'",
-                    questionPromptBn = "মাইক চেপে মুখে বলো: 'Cat'",
-                    targetSpeechWord = "Cat",
-                    correctAnswer = "Cat"
+                    id = "q2",
+                    type = QuizType.PICTURE_IDENTIFY,
+                    questionImageEmoji = "🐱",
+                    questionPromptBn = "এই ছবিটি কিসের? সঠিক ইংরেজি নির্বাচন করো:",
+                    options = listOf("Elephant", "Fish", "Cat", "Horse"),
+                    correctAnswer = "Cat",
+                    explanationBn = "🐱 হলো Cat (বিড়াল)"
+                ),
+                QuizItem(
+                    id = "q3",
+                    type = QuizType.PICTURE_IDENTIFY,
+                    questionImageEmoji = "🐟",
+                    questionPromptBn = "এই ছবিটি কিসের? সঠিক ইংরেজি নির্বাচন করো:",
+                    options = listOf("Fish", "Grapes", "Kite", "Ball"),
+                    correctAnswer = "Fish",
+                    explanationBn = "🐟 হলো Fish (মাছ)"
+                ),
+                QuizItem(
+                    id = "q4",
+                    type = QuizType.PICTURE_IDENTIFY,
+                    questionImageEmoji = "⚽",
+                    questionPromptBn = "এই ছবিটি কিসের? সঠিক ইংরেজি নির্বাচন করো:",
+                    options = listOf("Dog", "Ball", "Juice", "Lion"),
+                    correctAnswer = "Ball",
+                    explanationBn = "⚽ হলো Ball (বল)"
+                ),
+                QuizItem(
+                    id = "q5",
+                    type = QuizType.PICTURE_IDENTIFY,
+                    questionImageEmoji = "🦁",
+                    questionPromptBn = "এই ছবিটি কিসের? সঠিক ইংরেজি নির্বাচন করো:",
+                    options = listOf("Horse", "Cat", "Lion", "Elephant"),
+                    correctAnswer = "Lion",
+                    explanationBn = "🦁 হলো Lion (সিংহ)"
                 )
             )
         )
     }
 
     /**
-     * স্টেপ ১.২: পরিচিত রঙ ও আকার (Colors & Shapes)
+     * স্টেপ ১.২: চেনা রঙ ও আকার
      */
     private fun createStep1_2(): Lesson {
         return Lesson(
             id = "step_1_2",
             levelId = 1,
-            titleBn = "স্টেপ ১.২: রঙ ও আকার",
+            titleBn = "স্টেপ ১.২: আকর্ষণীয় রঙ ও আকার",
             titleEn = "Step 1.2: Colors & Shapes",
-            descriptionBn = "চারপাশের চেনা রঙগুলোর ইংরেজি নাম ও উচ্চারণ।",
-            isUnlocked = false, // স্টেপ ১.১ সফলভাবে পার করলে আনলক হবে
+            descriptionBn = "চারপাশের চেনা রঙগুলোর নাম ও উচ্চারণ শেখা।",
+            isUnlocked = false,
             starsEarned = 0,
             words = listOf(
-                WordItem(
-                    id = "w_red",
-                    englishWord = "Red",
-                    bengaliMeaning = "লাল",
-                    bengaliPronunciation = "রেড",
-                    exampleSentenceEn = "The rose is red.",
-                    exampleSentenceBn = "গোলাপটি লাল।"
-                ),
-                WordItem(
-                    id = "w_green",
-                    englishWord = "Green",
-                    bengaliMeaning = "সবুজ",
-                    bengaliPronunciation = "গ্রিন",
-                    exampleSentenceEn = "Leaves are green.",
-                    exampleSentenceBn = "গাছের পাতা সবুজ।"
-                ),
-                WordItem(
-                    id = "w_blue",
-                    englishWord = "Blue",
-                    bengaliMeaning = "নীল",
-                    bengaliPronunciation = "ব্লু",
-                    exampleSentenceEn = "The sky is blue.",
-                    exampleSentenceBn = "আকাশ নীল।"
-                )
+                WordItem("w20", "Red", "লাল", "রেড", "🔴", "The apple is red.", "আপেলটি লাল।"),
+                WordItem("w21", "Green", "সবুজ", "গ্রিন", "🟢", "The grass is green.", "ঘাস সবুজ।"),
+                WordItem("w22", "Blue", "নীল", "ব্লু", "🔵", "The sky is blue.", "আকাশ নীল।"),
+                WordItem("w23", "Yellow", "হলুদ", "ইয়েলো", "🟡", "The sun is yellow.", "সূর্য হলুদ।"),
+                WordItem("w24", "Star", "তারা", "স্টার", "⭐", "A bright star.", "উজ্জ্বল তারা।")
             ),
             quizzes = listOf(
-                QuizItem(
-                    id = "q_3",
-                    type = QuizType.TRANSLATE_MATCH,
-                    questionPromptEn = "What is 'সবুজ' in English?",
-                    questionPromptBn = "'সবুজ' এর ইংরেজি কী?",
-                    options = listOf("Blue", "Green", "Red"),
-                    correctAnswer = "Green"
-                ),
-                QuizItem(
-                    id = "q_4",
-                    type = QuizType.SPEAK_PRACTICE,
-                    questionPromptEn = "Say: 'Red'",
-                    questionPromptBn = "মাইক চেপে মুখে বলো: 'Red'",
-                    targetSpeechWord = "Red",
-                    correctAnswer = "Red"
-                )
+                QuizItem("q2_1", QuizType.PICTURE_IDENTIFY, "🔴", "এই রঙের ইংরেজি কী?", listOf("Red", "Blue", "Green", "Yellow"), "Red"),
+                QuizItem("q2_2", QuizType.PICTURE_IDENTIFY, "🟢", "এই রঙের ইংরেজি কী?", listOf("Yellow", "Green", "Red", "Blue"), "Green"),
+                QuizItem("q2_3", QuizType.PICTURE_IDENTIFY, "🔵", "এই রঙের ইংরেজি কী?", listOf("Blue", "Red", "Green", "Star"), "Blue"),
+                QuizItem("q2_4", QuizType.PICTURE_IDENTIFY, "🟡", "এই রঙের ইংরেজি কী?", listOf("Green", "Yellow", "Blue", "Red"), "Yellow"),
+                QuizItem("q2_5", QuizType.PICTURE_IDENTIFY, "⭐", "এই আকারের ইংরেজি নাম কী?", listOf("Star", "Ball", "Circle", "Red"), "Star")
             )
         )
     }
 
     /**
-     * স্টেপ ১.৩: প্রথম কথোপকথন ও অভিবাদন (Daily Greetings)
+     * স্টেপ ১.৩: প্রথম কুশল বিনিময়
      */
     private fun createStep1_3(): Lesson {
         return Lesson(
             id = "step_1_3",
             levelId = 1,
-            titleBn = "স্টেপ ১.৩: কথা বলা শুরু (Greetings)",
-            titleEn = "Step 1.3: First Conversation",
-            descriptionBn = "দৈনন্দিন কুশল বিনিময় ও অভিবাদন জানানোর বাক্য।",
-            isUnlocked = false, // স্টেপ ১.২ পার করলে আনলক হবে
+            titleBn = "স্টেপ ১.৩: প্রথম কথা বলা (Greetings)",
+            titleEn = "Step 1.3: Everyday Greetings",
+            descriptionBn = "প্রতিদিনের কুশল বিনিময় ও ধন্যবাদ জানানোর বাক্য।",
+            isUnlocked = false,
             starsEarned = 0,
             words = listOf(
-                WordItem(
-                    id = "w_hello",
-                    englishWord = "Hello",
-                    bengaliMeaning = "হ্যালো / ওহে",
-                    bengaliPronunciation = "হ্যালো",
-                    exampleSentenceEn = "Hello, how are you?",
-                    exampleSentenceBn = "হ্যালো, আপনি কেমন আছেন?"
-                ),
-                WordItem(
-                    id = "w_thankyou",
-                    englishWord = "Thank you",
-                    bengaliMeaning = "ধন্যবাদ",
-                    bengaliPronunciation = "থ্যাঙ্ক ইউ",
-                    exampleSentenceEn = "Thank you very much.",
-                    exampleSentenceBn = "আপনাকে অনেক ধন্যবাদ।"
-                ),
-                WordItem(
-                    id = "w_goodbye",
-                    englishWord = "Goodbye",
-                    bengaliMeaning = "বিদায়",
-                    bengaliPronunciation = "গুডবাই",
-                    exampleSentenceEn = "Goodbye, see you soon!",
-                    exampleSentenceBn = "বিদায়, আবার দেখা হবে!"
-                )
+                WordItem("w30", "Hello", "হ্যালো / ওহে", "হ্যালো", "👋", "Hello friend!", "হ্যালো বন্ধু!"),
+                WordItem("w31", "Thank you", "ধন্যবাদ", "থ্যাঙ্ক ইউ", "🙏", "Thank you so much.", "তোমাকে অনেক ধন্যবাদ।"),
+                WordItem("w32", "Goodbye", "বিদায়", "গুডবাই", "🙋", "Goodbye, take care.", "বিদায়, ভালো থেকো।"),
+                WordItem("w33", "Please", "দয়া করে", "প্লিজ", "🤝", "Please help me.", "দয়া করে আমাকে সাহায্য করো।"),
+                WordItem("w34", "Friend", "বন্ধু", "ফ্রেন্ড", "🧑‍🤝‍🧑", "You are my friend.", "তুমি আমার বন্ধু।")
             ),
             quizzes = listOf(
-                QuizItem(
-                    id = "q_5",
-                    type = QuizType.SPEAK_PRACTICE,
-                    questionPromptEn = "Say: 'Hello'",
-                    questionPromptBn = "মাইক চেপে মুখে সুন্দর করে বলো: 'Hello'",
-                    targetSpeechWord = "Hello",
-                    correctAnswer = "Hello"
-                ),
-                QuizItem(
-                    id = "q_6",
-                    type = QuizType.LISTEN_AND_PICK,
-                    questionPromptEn = "Someone helped you. What should you say?",
-                    questionPromptBn = "কেউ তোমাকে সাহায্য করলে কী বলবে?",
-                    options = listOf("Thank you", "Goodbye", "No"),
-                    correctAnswer = "Thank you"
-                )
+                QuizItem("q3_1", QuizType.PICTURE_IDENTIFY, "👋", "কাউকে অভিবাদন জানাতে কী বলবে?", listOf("Hello", "Goodbye", "No", "Please"), "Hello"),
+                QuizItem("q3_2", QuizType.PICTURE_IDENTIFY, "🙏", "কেউ সাহায্য করলে কী বলবে?", listOf("Hello", "Thank you", "Goodbye", "Red"), "Thank you"),
+                QuizItem("q3_3", QuizType.PICTURE_IDENTIFY, "🙋", "বিদায় নেওয়ার সময় কী বলবে?", listOf("Goodbye", "Thank you", "Hello", "Please"), "Goodbye"),
+                QuizItem("q3_4", QuizType.PICTURE_IDENTIFY, "🤝", "বিনম্রভাবে কিছু চাইতে কী বলবে?", listOf("Please", "No", "Goodbye", "Dog"), "Please"),
+                QuizItem("q3_5", QuizType.PICTURE_IDENTIFY, "🧑‍🤝‍🧑", "বন্ধুকে ইংরেজিতে কী বলে?", listOf("Friend", "Enemy", "Cat", "Ball"), "Friend")
             )
         )
     }
