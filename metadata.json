@@ -1,0 +1,6 @@
+{
+  "name": "Learn & Speak English Fluent",
+  "description": "Learn and speak English fluently with lessons, quizzes, and vocabulary tracking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

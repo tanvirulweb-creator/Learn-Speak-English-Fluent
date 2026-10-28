@@ -3,6 +3,7 @@ package com.example.learnspeakenglishfluent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,18 +27,20 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContent {
             MaterialTheme {
-                Surface(
+                Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                    color = Color(0xFFF7F9FC)
-                ) {
+                    containerColor = Color(0xFFF7F9FC)
+                ) { innerPadding ->
                     val currentLevel by progressRepository.currentLevel.collectAsState()
                     val totalStars by progressRepository.totalStars.collectAsState()
 
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
+                            .padding(innerPadding)
                             .padding(16.dp)
                     ) {
                         // অ্যাপ হেডার
@@ -66,7 +70,7 @@ class MainActivity : ComponentActivity() {
                             verticalArrangement = Arrangement.spacedBy(12.dp),
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            items(currentLevel.lessons) { lesson ->
+                            items(currentLevel.lessons, key = { it.id }) { lesson ->
                                 LessonCard(
                                     lesson = lesson,
                                     onCompleteClick = {
@@ -85,7 +89,9 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppHeader(totalStars: Int, completionPercent: Float) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .testTag("app_header_card"),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xFF4F46E5))
     ) {
@@ -130,7 +136,9 @@ fun LessonCard(lesson: Lesson, onCompleteClick: () -> Unit) {
     val titleColor = if (lesson.isUnlocked) Color(0xFF0F172A) else Color(0xFF94A3B8)
 
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .testTag("lesson_card_${lesson.id}"),
         shape = RoundedCornerShape(14.dp),
         colors = CardDefaults.cardColors(containerColor = backgroundColor),
         elevation = CardDefaults.cardElevation(if (lesson.isUnlocked) 4.dp else 0.dp)
@@ -175,6 +183,7 @@ fun LessonCard(lesson: Lesson, onCompleteClick: () -> Unit) {
                 Spacer(modifier = Modifier.height(12.dp))
                 Button(
                     onClick = onCompleteClick,
+                    modifier = Modifier.testTag("complete_lesson_button_${lesson.id}"),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF10B981)),
                     shape = RoundedCornerShape(8.dp)
                 ) {
